@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>席替え</title>
+  <link rel="stylesheet" href="{{ asset('css/top_page.css') }}">
+</head>
+
+<body>
+  <div class="topp__content">
+    <h1>席替え</h1>
+
+    @php
+    $stu_no = range(1, 50);
+    @endphp
+
+    <div class="desk-grid">
+      @foreach($stu_no as $no)
+      <div class="desk-card">
+        <span class="desk-no">{{ $no }}</span>
+      </div>
+      @endforeach
+    </div>
+
+  </div>
+</body>
+
+</html>
