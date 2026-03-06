@@ -1,11 +1,11 @@
-.topp__content{
-  max-width: 900px;
-  margin: 30px auto;
-  padding: 0 12px;
+.topp__content {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 12px;
 }
 
-.desk-grid{
-  display: grid;
+.desk-grid { /* 6列ｘ9行で並んだ状態のカード全体 */
+    display: grid;
     /* 要素を「グリッドレイアウト」にする指定 */
     /* 通常のHTMLは次の並び方になる */
     /*      要素   並び */
@@ -13,29 +13,56 @@
     /*      span   横に並ぶ */
     /* 指定すると、その要素の中の子要素は 格子状（行×列）で並ぶようにな */
 
-  grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     /* 「横方向に何列作るか」 を指定している */
     /* 「repeat(6, 1fr)」の意味： 6列作る、各列の幅は 1fr */
 
-  gap: 12px;
+    gap: 12px;
     /* グリッドの要素同士の隙間を指定 */
     /* 縦方向にも同じ隙間ができる */
 
-  margin-top: 18px;
+    margin-top: 18px;
     /* 上の要素(h1)との距離 */
 }
 
-.desk-card{
-  border: 1px solid #333;
-  border-radius: 10px;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
+.desk-card {
+    border: 1px solid #333;
+    border-radius: 10px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #79c4fc;
 }
 
-.desk-no{
-  font-size: 20px;
-  font-weight: bold;
+.desk-no {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+}
+
+
+.controls{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.controls__label{ font-weight: bold; }
+
+.controls__input{
+  width: 120px;
+  padding: 6px 8px;
+}
+
+.controls__btn, .start-btn{
+  padding: 8px 12px;
+  border: 1px solid #333;
+  background: #fff;
+  cursor: pointer;
+}
+
+.start-btn{
+  margin-top: 14px;
 }
