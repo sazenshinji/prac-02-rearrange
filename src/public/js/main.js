@@ -50,7 +50,7 @@ renderBtn.addEventListener("click", () => {
     renderDesks(count);
 });
 
-// Enterキーでも表示できるように（任意）
+// 人数入力エリアのEnterキー押下でも表示できるように（任意）
 input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         const count = clampPeopleCount(input.value);
