@@ -4,7 +4,6 @@ const grid = document.querySelector("#deskGrid");
 const input = document.querySelector("#peopleCount");
 const renderBtn = document.querySelector("#renderBtn");
 const shuffleBtn = document.querySelector("#shuffleBtn");
-const absentBtn = document.querySelector("#absenteeBtn");
 
 function clampPeopleCount(value) {
     const n = Number(value);
@@ -45,16 +44,6 @@ function shuffleFisherYates(array) {
     return array;
 }
 
-// カンマ区切りの欠席者を配列に変換する関数
-function getAbsentNumbers() {
-    const absenteeInput = document.querySelector("#absentee");
-
-    return absenteeInput.value
-        .split(",")
-        .map((v) => Number(v.trim()))
-        .filter((n) => Number.isFinite(n));
-}
-
 // 「席を表示」ボタン：人数分の席を作る
 renderBtn.addEventListener("click", () => {
     const count = clampPeopleCount(input.value);
@@ -67,12 +56,6 @@ input.addEventListener("keydown", (e) => {
         const count = clampPeopleCount(input.value);
         renderDesks(count);
     }
-});
-
-// 「欠席者入力」ボタン：カンマ区切りの欠席者を配列に変換する
-absentBtn.addEventListener("click", () => {
-    const absentNumbers = getAbsentNumbers();
-    console.log(absentNumbers);
 });
 
 // 「席替えスタート！」ボタン：表示されている席だけシャッフル
