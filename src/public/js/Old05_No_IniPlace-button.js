@@ -2,26 +2,19 @@ console.log("*** Rearrange *** ");
 
 const grid = document.querySelector("#deskGrid");
 const input = document.querySelector("#peopleCount");
-const absentInput = document.querySelector("#absentee");
-const initBtn = document.querySelector("#initBtn");
-let absentNumbers = [];
+const renderBtn = document.querySelector("#renderBtn");
 const shuffleBtn = document.querySelector("#shuffleBtn");
+const absentBtn = document.querySelector("#absenteeBtn");
+const absentInput = document.querySelector("#absentee");
+let absentNumbers = [];
+let shuffleFlg = true;
 
-//-------------------------------------------
-// 関数群
-//-------------------------------------------
-// 音楽ファイルを用意
-const shuffleMusic = new Audio("/audio/drumroll .mp3");
-shuffleMusic.loop = true; // シャッフル中は繰り返し再生
-
-// 入力された「人数」を、安全に 1〜50 の整数に補正する
 function clampPeopleCount(value) {
     const n = Number(value);
     if (!Number.isFinite(n)) return 1;
     return Math.max(1, Math.min(50, Math.floor(n)));
 }
 
-//1番から順に机カードを作って画面へ表示する
 function renderDesks(count) {
     grid.innerHTML = "";
 
@@ -49,7 +42,6 @@ function renderDesks(count) {
     shuffleBtn.disabled = count === 0;
 }
 
-//配列をランダムにシャッフルする
 function shuffleFisherYates(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -85,60 +77,48 @@ function shuffleDisp() {
     grid.appendChild(fragment);
 }
 
-
-//-------------------------------------------
-// 関数を呼び出す処理
 //-------------------------------------------
 
-// 人数入力エリアのEnterキー押下：人数分の席を並べる
+// 「席を表示」ボタン：人数分の席を作る
+renderBtn.addEventListener("click", () => {
+    const count = clampPeopleCount(input.value);
+    renderDesks(count);
+});
+// 人数入力エリアのEnterキー押下でも表示できるように（任意）
 input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         const count = clampPeopleCount(input.value);
-        absentNumbers = getAbsentNumbers();
-        renderDesks(count); //1番から並べて画面へ表示する
+        renderDesks(count);
     }
 });
-// 「欠席者入力」Enterキー押下：カンマ区切りの欠席者を配列に変換すし人数分の席を並べる
+
+
+// 「欠席者入力」ボタン：カンマ区切りの欠席者を配列に変換する
+absentBtn.addEventListener("click", () => {
+    absentNumbers = getAbsentNumbers();
+    console.log(absentNumbers);
+    const count = clampPeopleCount(input.value);
+    renderDesks(count);
+});
+// 「欠席者入力」Enterキー押下：カンマ区切りの欠席者を配列に変換する
 absentInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         absentNumbers = getAbsentNumbers();
+        console.log(absentNumbers);
         const count = clampPeopleCount(input.value);
-        renderDesks(count); //1番から並べて画面へ表示する
+        renderDesks(count);
     }
 });
 
-// 人数分の席を順番に並べる
-initBtn.addEventListener("click", () => {
-    const count = clampPeopleCount(input.value);
-    absentNumbers = getAbsentNumbers();
-    renderDesks(count); //1番から並べて画面へ表示する
-});
 
 // 「席替えスタート！」ボタン：表示されている席だけシャッフル
 shuffleBtn.addEventListener("click", () => {
-    absentNumbers = getAbsentNumbers();
-    renderDesks(clampPeopleCount(input.value)); //1番から人数分画面へ表示する
-
-    shuffleBtn.disabled = true; // 多重起動防止
-
-    // 音楽を先頭から再生
-    shuffleMusic.currentTime = 0;
-    shuffleMusic.play().catch((error) => {
-        console.log("音楽を再生できませんでした:", error);
-    });
-
     const timerId2 = setInterval(shuffleDisp, 100); // 0.1秒ごと
 
     setTimeout(() => {
-        clearInterval(timerId2); // 4秒後に停止
-        // 音楽も停止
-        shuffleMusic.pause();
-        shuffleMusic.currentTime = 0;
-
-        shuffleBtn.disabled = false;
-    }, 4000);
+        clearInterval(timerId2); // 5秒後に停止
+    }, 5000);
 });
 
-// 初期表示（デフォルト人数、欠席なしで表示）
-absentNumbers = getAbsentNumbers();
-renderDesks(clampPeopleCount(input.value)); //1番から人数分画面へ表示する
+// 初期表示（デフォルト人数で表示）
+renderDesks(clampPeopleCount(input.value));

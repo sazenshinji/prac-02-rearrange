@@ -15,22 +15,22 @@
   <div class="topp__content">
     <h1>席替え</h1>
 
-    {{-- 人数入力 --}}
+    {{-- 人数、欠席者 入力 --}}
     <div class="controls">
       <label class="controls__label" for="peopleCount">人数（1〜50）</label>
       <input id="peopleCount" class="controls__input" type="number" min="1" max="50" value="50">
+      <button id="renderBtn" type="button" class="controls__btn">席を表示</button>
     </div>
 
-    {{-- 欠席者入力 --}}
     <div class="controls">
-      <label class="controls__label" for="absentee">欠席者(カンマ区切り)</label>
+      <label class="controls__label" for="absentee">欠席者番号(カンマ区切り、半角数字)</label>
       <input id="absentee" class="controls__input" type="text" placeholder="例: 3,7,12">
+      <button id="absenteeBtn" type="button" class="controls__btn">欠席者入力</button>
     </div>
 
     {{-- ここにJSでカードを描画する --}}
     <div class="desk-grid" id="deskGrid"></div>
 
-    <button id="initBtn" type="button" class="init-btn">順番に並べる</button>
     <button id="shuffleBtn" type="button" class="start-btn">席替えスタート！</button>
   </div>
 

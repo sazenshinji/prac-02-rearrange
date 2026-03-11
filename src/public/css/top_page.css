@@ -56,13 +56,13 @@
   padding: 6px 8px;
 }
 
-.controls__btn, .start-btn{
+.init-btn, .start-btn{
   padding: 8px 12px;
   border: 1px solid #333;
   background: #fff;
   cursor: pointer;
 }
 
-.start-btn{
+.init-btn, .start-btn{
   margin-top: 14px;
 }
