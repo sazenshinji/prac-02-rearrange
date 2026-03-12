@@ -1,11 +1,11 @@
 console.log("*** Rearrange *** ");
 
-const grid = document.querySelector("#deskGrid");
-const input = document.querySelector("#peopleCount");
-const absentInput = document.querySelector("#absentee");
-const initBtn = document.querySelector("#initBtn");
-let absentNumbers = [];
-const shuffleBtn = document.querySelector("#shuffleBtn");
+const grid = document.querySelector("#deskGrid"); //机を並べるエリアのdiv要素
+const input = document.querySelector("#peopleCount"); //人数入力のinput要素
+const absentInput = document.querySelector("#absentee"); //欠席者のinput要素
+const initBtn = document.querySelector("#initBtn"); //初期化 button要素
+const shuffleBtn = document.querySelector("#shuffleBtn"); //席替 button要素
+let absentNumbers = []; //欠席者を扱いやすい様に配列に変換
 
 //-------------------------------------------
 // 関数群
@@ -58,7 +58,7 @@ function shuffleFisherYates(array) {
     return array;
 }
 
-// カンマ区切りの欠席者を配列に変換する関数
+// カンマ区切りの欠席者文字列を配列に変換する関数
 function getAbsentNumbers() {
     const absenteeInput = document.querySelector("#absentee");
     const value = absenteeInput.value.trim();
@@ -85,12 +85,11 @@ function shuffleDisp() {
     grid.appendChild(fragment);
 }
 
-
 //-------------------------------------------
 // 関数を呼び出す処理
 //-------------------------------------------
 
-// 人数入力エリアのEnterキー押下：人数分の席を並べる
+// 人数入力エリアのEnterキー押下時の処理： 人数分の席を順に並べる
 input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         const count = clampPeopleCount(input.value);
@@ -98,23 +97,23 @@ input.addEventListener("keydown", (e) => {
         renderDesks(count); //1番から並べて画面へ表示する
     }
 });
-// 「欠席者入力」Enterキー押下：カンマ区切りの欠席者を配列に変換すし人数分の席を並べる
+// 「欠席者入力」Enterキー押下の時の処理： カンマ区切りの欠席者を配列に変換し人数分の席を順に並べる
 absentInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-        absentNumbers = getAbsentNumbers();
         const count = clampPeopleCount(input.value);
+        absentNumbers = getAbsentNumbers();
         renderDesks(count); //1番から並べて画面へ表示する
     }
 });
 
-// 人数分の席を順番に並べる
+// 「順番に並べる」ボタン：人数分の席を順番に並べる
 initBtn.addEventListener("click", () => {
     const count = clampPeopleCount(input.value);
     absentNumbers = getAbsentNumbers();
     renderDesks(count); //1番から並べて画面へ表示する
 });
 
-// 「席替えスタート！」ボタン：表示されている席だけシャッフル
+// 「席替えスタート！」ボタン：表示されている席をシャッフル
 shuffleBtn.addEventListener("click", () => {
     absentNumbers = getAbsentNumbers();
     renderDesks(clampPeopleCount(input.value)); //1番から人数分画面へ表示する
